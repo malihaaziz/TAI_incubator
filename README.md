@@ -1,8 +1,11 @@
 # Evaluating Fidelity of Protein LLM Embeddings for Host-Association Analysis
 
 **Author**: Maliha Aziz
+
 **Institution**: The George Washington University
+
 **Department**: Department of Bioinformatics and Biostatistics
+
 **Affiliation**: NSF Graduate Research Fellow [GW DTAIS](https://dtais.engineering.gwu.edu/) , [Antibiotic Resistance Action Center](https://battlesuperbugs.com/) 
 
 ## Overview
