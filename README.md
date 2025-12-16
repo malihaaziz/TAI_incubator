@@ -43,9 +43,12 @@ Protein embeddings from large language models (ESM-2, ESM-C) capture functional 
 
 The pipeline expects [geNomad](https://github.com/apcamargo/genomad) results as input. You will need to create a folder with genome assemblies for your microbe of interest. Then run the following command
 
-# Database
+genomad Database
+
 genomad_db="YOURPATH/genomad_db/"
+
 genomad end-to-end --cleanup Data_Folder_input/InputGenome.fna.gz main_output_folder/Output_filename $genomad_db
+
 
 ### Phase 1: Data Integration (`merge`)
 Merges geNomad annotation outputs including:
