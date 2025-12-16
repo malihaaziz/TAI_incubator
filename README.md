@@ -1,18 +1,19 @@
 # Evaluating Fidelity of Protein LLM Embeddings for Host-Association Analysis
 
-**Author**: Maliha Aziz, Dr. Lance Price
+**Author**: Maliha Aziz
 **Institution**: The George Washington University
-**Affiliation**: GW TAI Trustworthy AI Antibiotic Resistance Action Center
+**Department**: Department of Bioinformatics and Biostatistics
+**Affiliation**: NSF Graduate Research Fellow [GW DTAIS](https://dtais.engineering.gwu.edu/) , [Antibiotic Resistance Action Center](https://battlesuperbugs.com/) 
 
 ## Overview
 
-This project evaluates the fidelity of protein language model (LLM) embeddings, specifically ESM-2, for analyzing host associations in *E. coli* and mobile genetic elements (MGEs). The pipeline processes genomic data to identify and cluster MGE-associated proteins across different bacterial hosts (human, chicken, turkey, pork) to understand horizontal gene transfer patterns and identify host-associated genes.
+This project evaluates the fidelity of protein language model (LLM) embeddings, specifically ESM-2, for analyzing host associations of mobile genetic elements (MGEs) specifically in *E. coli*. The pipeline processes genomic data to identify and cluster MGE-associated proteins across different bacterial hosts (human, chicken, turkey, pork) to understand horizontal gene transfer patterns and identify host-associated genes.
 
-**Key Innovation**: Leverages alignment-free protein embeddings from ESM-2 (trained on ~65M UniRef sequences) to accelerate pangenome-like grouping and identify host-associated gene clusters, reducing reliance on computationally expensive sequence alignments while maintaining interpretability.
+**Key Innovation**: Leverages alignment-free protein embeddings from ESM-2 (trained on ~65M UniRef sequences) to accelerate pangenome-like grouping and identify host-associated gene clusters, reducing reliance on computationally expensive sequence alignments and clustering while maintaining interpretability.
 
 ## Background & Motivation
 
-Mobile genetic elements (MGEs) such as plasmids and viruses facilitate horizontal gene transfer between bacteria, enabling the spread of traits like antibiotic resistance. Understanding which MGE proteins are shared across different hosts is critical for:
+MGEs such as plasmids and viruses facilitate horizontal gene transfer between bacteria, enabling the spread of traits like antibiotic resistance. Understanding which MGE proteins are shared across different hosts is critical for:
 
 - Tracking antibiotic resistance gene transmission
 - Identifying cross-host MGE transfer events
@@ -37,9 +38,14 @@ Protein embeddings from large language models (ESM-2, ESM-C) capture functional 
 3. **How well do different clustering algorithms perform on protein embeddings?**
    - Leiden community detection on k-NN graphs
    - DBSCAN density-based clustering
-   - Planned: HDBSCAN, spherical k-means
 
 ## Pipeline Overview
+
+The pipeline expects [geNomad](https://github.com/apcamargo/genomad) results as input. You will need to create a folder with genome assemblies for your microbe of interest. Then run the following command
+
+# Database
+genomad_db="YOURPATH/genomad_db/"
+genomad end-to-end --cleanup Data_Folder_input/InputGenome.fna.gz main_output_folder/Output_filename $genomad_db
 
 ### Phase 1: Data Integration (`merge`)
 Merges geNomad annotation outputs including:
@@ -52,7 +58,7 @@ Merges geNomad annotation outputs including:
 Filters for MGE-associated genes based on hallmark markers.
 
 ### Phase 2: Embedding Generation & Clustering (`generate_embeddings`)
-1. **Extract MGE protein sequences** from geNomad outputs
+1. **Extract MGE protein sequences** from genes annotated by geNomad. 
 2. **Generate embeddings** using ESM-2 650M parameter model (1280-dimensional vectors)
 3. **Cluster proteins** using:
    - **Leiden algorithm**: Graph-based community detection via k-NN graph (FAISS)
@@ -89,12 +95,6 @@ Filters for MGE-associated genes based on hallmark markers.
   pip install igraph leidenalg h5py matplotlib
   pip install faiss-gpu  # or faiss-cpu for CPU-only
   ```
-
-### Clone Repository
-```bash
-git clone <repository-url>
-cd TAI_incubator
-```
 
 ## Usage
 
@@ -236,9 +236,9 @@ TAI_incubator/
 
 ### Long-Term Goals
 
-- Expand to additional protein language models (ESM-C, ProtTrans)
+- Expand to additional protein language models (ESM-C, ProtTrans) or genomic language model (NT)
 - Integrate phylogenetic analysis with embedding-based clustering
-- Develop predictive models for cross-host transmission risk
+- Finetune the LLMs
 - Create practical front-end tools for host-association analysis
 - Validate with experimental functional annotation data
 
@@ -298,12 +298,12 @@ for Host-Association Analysis. The George Washington University.
 ## Contact
 
 For questions or collaborations:
-- **Maliha Aziz** - The George Washington University
-- **Dr. Lance Price** - Antibiotic Resistance Action Center
+- **Maliha Aziz (mlaziz@gwu.edu)** - The George Washington University 
+
 
 ## Acknowledgments
 
-This work was conducted at The George Washington University's Trustworthy AI (TAI) program in collaboration with the Antibiotic Resistance Action Center.
+This work was conducted as a part of a Summer Incubator for NSF Graduate Research Fellowship [GW DTAIS](https://dtais.engineering.gwu.edu/) . The processes were run on [GWU HPC](https://hpc.gwu.edu/pegasus/)
 
 ## License
 
